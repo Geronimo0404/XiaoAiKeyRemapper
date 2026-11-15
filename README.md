@@ -14,7 +14,7 @@ XiaoAiKey 是一个 Windows 小工具，用来把部分小米笔记本的“超�
 
 ## 安装和设置
 
-1. 从 [Actions](https://github.com/Geronimo0404/XiaoAiKey-public/actions) 中选择主分支上成功的 Windows 构建，下载 `XiaoAiKey-tui-windows-x64` 并解压。完整运行包应包含 `Tui.cmd`、`Manage.ps1`、`scripts`、`bin`、`checksums.json` 及许可证文件。Actions 下载通常需要登录 GitHub；目前没有正式 Release。
+1. 从 [Actions](https://github.com/Geronimo0404/XiaoAiKeyRemapper/actions) 中选择主分支上成功的 Windows 构建，下载 `XiaoAiKey-tui-windows-x64` 并解压。完整运行包应包含 `Tui.cmd`、`Manage.ps1`、`scripts`、`bin`、`checksums.json` 及许可证文件。Actions 下载通常需要登录 GitHub；目前没有正式 Release。
 
    GitHub 的“Download ZIP”是源码包，不包含已编译程序，需要先按下文构建。请使用主分支的最新成功构建。
 2. 在普通用户权限下运行 `Tui.cmd`。也可以在程序包目录打开普通 PowerShell，运行：
@@ -49,26 +49,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Manage.ps1 -Action Status
 
 安装后生效的配置文件为 `C:\Program Files\XiaoAiKey\settings.xml`，其中 `ExecutablePath`、`Arguments` 和 `WorkingDirectory` 分别表示启动程序、参数和起始目录。
 
-## 源码和构建
+## 从源码构建
 
-主要文件：
-
-- `src/KeyListener.cs`：监听 WMI 按键事件，以普通用户权限启动目标。
-- `src/FilterController.c`、`src/PromptFilter.c`：验证原厂进程并过滤指定下载提示。
-- `scripts/Manager.Core.psm1`、`Manage.ps1`：配置、安装、卸载和菜单。
-- `tests/Manager.Tests.ps1`：使用模拟计划任务接口的隔离测试。
-
-在 Windows x64 上构建需要 .NET Framework C# 编译器和 64 位 MinGW GCC。将 GCC 加入 PATH 后运行：
+需要 Windows x64、.NET Framework C# 编译器和 64 位 MinGW GCC。配置好 GCC 后运行：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\Build.ps1
 ```
 
-也可以用 `-GccPath` 指定 `gcc.exe`。构建会生成三个程序文件并更新 `checksums.json`；完成后才可运行源码目录中的 `Tui.cmd`。源码仓库不保存预编译程序。
-
-CI 下载包还包含 `build-info.json`，记录源码提交号、编译器版本、构建时间和程序校验值，方便追溯来源；它不是可复现构建或代码签名的证明。自动化测试覆盖脚本解析、编译和部分配置与安装生命周期逻辑，但不能模拟实体小爱键或代替真机测试。具体范围见 [测试记录](docs/TESTING.md)。
-
-本仓库从整理后的源码快照开始，不包含早期开发历史。
+构建完成后运行 `Tui.cmd`。详细步骤见[构建说明](docs/BUILDING.md)。
 
 ## 许可
 
