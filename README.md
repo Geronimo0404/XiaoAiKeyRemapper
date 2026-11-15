@@ -14,9 +14,7 @@ XiaoAiKeyRemapper 是一个 Windows 小工具，用来把部分小米笔记本�
 
 ## 安装
 
-1. 从 [Actions](https://github.com/Geronimo0404/XiaoAiKeyRemapper/actions) 中选择主分支上成功的 Windows 构建，下载 `XiaoAiKey-tui-windows-x64` 并解压。完整运行包应包含 `Tui.cmd`、`Manage.ps1`、`scripts`、`bin`、`checksums.json` 及许可证文件。Actions 下载通常需要登录 GitHub；目前没有正式 Release。
-
-   GitHub 的“Download ZIP”是源码包，不包含已编译程序，需要先按下文构建。请使用主分支的最新成功构建。
+1. 从 [Actions](https://github.com/Geronimo0404/XiaoAiKeyRemapper/actions) 中选择主分支上成功的 Windows 构建，下载 `XiaoAiKey-tui-windows-x64` 并解压。完整运行包应包含 `Tui.cmd`、`Manage.ps1`、`scripts`、`bin`、`checksums.json` 及许可证文件。
 2. 在普通用户权限下运行 `Tui.cmd`。也可以在程序包目录打开普通 PowerShell，运行：
 
    ```powershell
