@@ -1,0 +1,89 @@
+name: Windows build and manager tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Find 64-bit GCC
+        shell: powershell
+        run: |
+          $candidates = @('C:\msys64\mingw64\bin\gcc.exe', 'C:\msys64\ucrt64\bin\gcc.exe')
+          $gcc = $candidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+          if (!$gcc) { $command = Get-Command gcc.exe -ErrorAction SilentlyContinue; if ($command) { $gcc = $command.Source } }
+          if (!$gcc) { throw 'The Windows runner does not contain 64-bit MinGW GCC.' }
+          "XIAOAI_GCC=$gcc" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Build native programs and listener
+        shell: powershell
+        run: .\Build.ps1 -GccPath $env:XIAOAI_GCC
+      - name: Parse every PowerShell file with Windows PowerShell
+        shell: powershell
+        run: |
+          $files = Get-ChildItem -Path . -Recurse -File | Where-Object { $_.Extension -in @('.ps1','.psm1') }
+          foreach ($file in $files) {
+            $tokens=$null; $errors=$null
+            $null=[System.Management.Automation.Language.Parser]::ParseFile($file.FullName,[ref]$tokens,[ref]$errors)
+            if ($errors) { $errors | Format-List; throw "Parse failed: $($file.FullName)" }
+          }
+      - name: Install test framework
+        shell: powershell
+        run: |
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          $null=Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
+          Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force
+      - name: Run isolated manager tests
+        shell: powershell
+        run: |
+          Import-Module Pester -MinimumVersion 5.5.0 -Force
+          $configuration=New-PesterConfiguration
+          $configuration.Run.Path='./tests'
+          $configuration.Run.Exit=$true
+          $configuration.Output.Verbosity='Detailed'
+          Invoke-Pester -Configuration $configuration
+      - name: Read-only manager smoke test
+        shell: powershell
+        run: .\Manage.ps1 -Action Status
+      - name: Prepare downloadable package
+        shell: powershell
+        run: |
+          $null=New-Item -ItemType Directory -Path dist\XiaoAiKey\scripts,dist\XiaoAiKey\bin -Force
+          Copy-Item -Path bin\* -Destination dist\XiaoAiKey\bin
+          Copy-Item -Path Manage.ps1,Tui.cmd,README.md,checksums.json,LICENSE,THIRD_PARTY_NOTICES.md,SECURITY.md -Destination dist\XiaoAiKey
+          Copy-Item -Path scripts\Manager.Core.psm1 -Destination dist\XiaoAiKey\scripts
+          Copy-Item -Path third_party,docs -Destination dist\XiaoAiKey -Recurse -Force
+          $sourceHashes = [ordered]@{}
+          foreach ($file in (Get-ChildItem src,scripts -Recurse -File | Sort-Object FullName)) {
+            $relative = $file.FullName.Substring($PWD.Path.Length + 1).Replace('\','/')
+            $sourceHashes[$relative] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
+          }
+          foreach ($name in @('Build.ps1','Manage.ps1','Tui.cmd')) {
+            $sourceHashes[$name] = (Get-FileHash -LiteralPath $name -Algorithm SHA256).Hash
+          }
+          $gccVersionOutput = & $env:XIAOAI_GCC --version
+          if ($LASTEXITCODE -ne 0) { throw 'Could not read GCC version.' }
+          $metadata = [ordered]@{
+            SourceCommit = $env:GITHUB_SHA
+            BuiltAtUtc = [DateTime]::UtcNow.ToString('o')
+            Gcc = ($gccVersionOutput | Select-Object -First 1)
+            CSharpCompiler = [Diagnostics.FileVersionInfo]::GetVersionInfo("$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe").FileVersion
+            SourceSHA256 = $sourceHashes
+            PayloadSHA256 = (Get-Content checksums.json -Raw | ConvertFrom-Json)
+          }
+          $metadata | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath dist\XiaoAiKey\build-info.json -Encoding UTF8
+          foreach ($name in @('LICENSE','THIRD_PARTY_NOTICES.md','SECURITY.md','build-info.json','third_party\licenses\MinGW-w64-runtime.txt','third_party\licenses\GCC-Runtime-Library-Exception-3.1.txt','third_party\licenses\GPL-3.0.txt')) {
+            if (!(Test-Path -LiteralPath (Join-Path dist\XiaoAiKey $name))) { throw "Missing package file: $name" }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: XiaoAiKey-tui-windows-x64
+          path: dist/XiaoAiKey/

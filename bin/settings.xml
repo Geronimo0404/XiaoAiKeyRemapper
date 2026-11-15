@@ -1,0 +1,5 @@
+<XiaoAiKey>
+  <ExecutablePath>%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe</ExecutablePath>
+  <Arguments></Arguments>
+  <WorkingDirectory>%USERPROFILE%</WorkingDirectory>
+</XiaoAiKey>

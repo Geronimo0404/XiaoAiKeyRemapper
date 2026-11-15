@@ -1,0 +1,44 @@
+[
+  {
+    "file": "MinGW-w64-runtime.txt",
+    "upstreamRepository": "mingw-w64/mingw-w64",
+    "upstreamPath": "COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
+    "gitBlobSHA": "776d5f1034240f6dae0ce59d592f9c6f4ad29e7d",
+    "sourceURL": "https://api.github.com/repos/mingw-w64/mingw-w64/git/blobs/776d5f1034240f6dae0ce59d592f9c6f4ad29e7d"
+  },
+  {
+    "file": "MinGW-w64-COPYING.txt",
+    "upstreamRepository": "mingw-w64/mingw-w64",
+    "upstreamPath": "COPYING",
+    "gitBlobSHA": "28fa9514c036c2ae6a545fc9fe75c37baecf596d",
+    "sourceURL": "https://api.github.com/repos/mingw-w64/mingw-w64/git/blobs/28fa9514c036c2ae6a545fc9fe75c37baecf596d"
+  },
+  {
+    "file": "MinGW-w64-DISCLAIMER.txt",
+    "upstreamRepository": "mingw-w64/mingw-w64",
+    "upstreamPath": "DISCLAIMER",
+    "gitBlobSHA": "51261a8ec4b5c5b6b074317fab1d7f506eb30425",
+    "sourceURL": "https://api.github.com/repos/mingw-w64/mingw-w64/git/blobs/51261a8ec4b5c5b6b074317fab1d7f506eb30425"
+  },
+  {
+    "file": "MinGW-w64-DISCLAIMER-PD.txt",
+    "upstreamRepository": "mingw-w64/mingw-w64",
+    "upstreamPath": "DISCLAIMER.PD",
+    "gitBlobSHA": "91fb0d6dc9d1f65394cbec575a857e635868ed74",
+    "sourceURL": "https://api.github.com/repos/mingw-w64/mingw-w64/git/blobs/91fb0d6dc9d1f65394cbec575a857e635868ed74"
+  },
+  {
+    "file": "GCC-Runtime-Library-Exception-3.1.txt",
+    "upstreamRepository": "gcc-mirror/gcc",
+    "upstreamPath": "COPYING.RUNTIME",
+    "gitBlobSHA": "e1b3c69c179dfaff5744ea4bf853e6b0d90c9ef9",
+    "sourceURL": "https://api.github.com/repos/gcc-mirror/gcc/git/blobs/e1b3c69c179dfaff5744ea4bf853e6b0d90c9ef9"
+  },
+  {
+    "file": "GPL-3.0.txt",
+    "upstreamRepository": "gcc-mirror/gcc",
+    "upstreamPath": "COPYING3",
+    "gitBlobSHA": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+    "sourceURL": "https://api.github.com/repos/gcc-mirror/gcc/git/blobs/94a9ed024d3859793618152ea559a168bbcbb5e2"
+  }
+]
