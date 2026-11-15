@@ -49,6 +49,6 @@ GitHub Actions 会重新编译程序，并生成 `XiaoAiKey-tui-windows-x64` 下
 
 `build-info.json` 由 CI 打包步骤生成，单独运行 `Build.ps1` 不会生成它。这些记录用于追溯来源，不是可复现构建或代码签名的证明。
 
-自动化测试覆盖脚本解析、编译和部分配置与安装生命周期逻辑，不能模拟实体小爱键，也不能代替真机测试。具体范围见[测试记录](TESTING.md)。
+自动化测试覆盖脚本解析、编译和部分配置与安装生命周期逻辑，不能模拟实体小爱键，也不能代替真机测试。
 
 如果自行分发程序包，请保留 `LICENSE`、`THIRD_PARTY_NOTICES.md` 和 `third_party/licenses`；第三方许可说明见[这里](../THIRD_PARTY_NOTICES.md)。
