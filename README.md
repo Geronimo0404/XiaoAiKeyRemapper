@@ -1,6 +1,6 @@
-# XiaoAiKey
+# XiaoAiKeyRemapper
 
-XiaoAiKey 是一个 Windows 小工具，用来把部分小米笔记本的“超级小爱”键改成启动你选择的程序。
+XiaoAiKeyRemapper 是一个 Windows 小工具，用来把部分小米笔记本的超级小爱键改成启动你选择的程序。
 
 它监听小爱键事件，并过滤小爱未安装时出现的下载提示。亮度、音量、投屏和键盘背光等其他快捷键仍由小米原厂组件处理。
 
