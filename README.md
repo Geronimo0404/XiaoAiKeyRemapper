@@ -61,6 +61,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Build.ps1
 
 ## 许可
 
-本项目自行编写的代码和文档使用 [MIT 许可证](LICENSE)。编译运行库保留各自的许可，说明和原文见 [第三方说明](THIRD_PARTY_NOTICES.md) 及 `third_party/licenses`。请在转发程序包时保留这些文件。
+本项目自行编写的代码和文档使用 [MIT 许可证](LICENSE)。编译运行库保留各自的许可，说明和原文见 [第三方说明](THIRD_PARTY_NOTICES.md) 及 `third_party/licenses`。
 
 本项目不是小米官方产品，也不包含小米电脑管家的程序文件。产品名称仅用于说明兼容对象，不表示厂商认可或担保。
