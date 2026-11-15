@@ -1,6 +1,6 @@
 # XiaoAiKey
 
-XiaoAiKey 是一个 Windows 小工具，用来把部分小米笔记本的“超级小爱”键改成启动你选择的程序。例如，按下这个键后打开 Windows PowerShell、Windows Terminal，或其他程序。
+XiaoAiKey 是一个 Windows 小工具，用来把部分小米笔记本的“超级小爱”键改成启动你选择的程序。
 
 它监听小爱键事件，并过滤小爱未安装时出现的下载提示。亮度、音量、投屏和键盘背光等其他快捷键仍由小米原厂组件处理。
 
@@ -64,5 +64,3 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Build.ps1
 本项目自行编写的代码和文档使用 [MIT 许可证](LICENSE)。编译运行库保留各自的许可，说明和原文见 [第三方说明](THIRD_PARTY_NOTICES.md) 及 `third_party/licenses`。请在转发程序包时保留这些文件。
 
 本项目不是小米官方产品，也不包含小米电脑管家的程序文件。产品名称仅用于说明兼容对象，不表示厂商认可或担保。
-
-这是个人使用的实验性项目，目前不提供技术支持。
